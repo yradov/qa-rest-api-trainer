@@ -67,6 +67,16 @@ const GLOSSARY = {
             term: "DELETE",
             def:  "Removes a resource permanently. **Idempotent**: deleting an already-deleted resource returns 404 (not a server error) — this is correct and expected. After DELETE, a GET on the same ID must return 404.",
           },
+          {
+            term: "HEAD",
+            def:  "Works exactly like GET but the server returns **only headers — no response body**. The server processes the request fully but omits the payload. Useful for checking whether a resource exists (by status code) or reading metadata (`Content-Length`, `Last-Modified`) without downloading the full data.",
+            note: "<div style='margin-top:8px;padding:8px 12px;border-left:3px solid var(--put);background:rgba(245,158,11,.07);border-radius:3px;font-size:12px'>⚠ <strong>Not part of CRUD.</strong> HEAD is a meta/utility method — it inspects resources without reading their content. Mainly used by caches, crawlers, and monitoring tools, not by typical application clients.</div>",
+          },
+          {
+            term: "OPTIONS",
+            def:  "Returns the **list of HTTP methods allowed** for a given URL. Primarily used by browsers automatically as a **CORS preflight request** — before any cross-origin request, the browser silently asks the server \"what methods do you allow here?\". Developers rarely call OPTIONS explicitly.",
+            note: "<div style='margin-top:8px;padding:8px 12px;border-left:3px solid var(--put);background:rgba(245,158,11,.07);border-radius:3px;font-size:12px'>⚠ <strong>Not part of CRUD.</strong> OPTIONS is handled automatically by the framework (FastAPI) and the browser. As a QA engineer you will almost never call it manually — but you may see it in browser DevTools network tab before cross-origin requests.</div>",
+          },
         ],
       },
       {
@@ -261,6 +271,16 @@ const GLOSSARY = {
             term: "DELETE",
             def:  "Видаляє ресурс назавжди. **Ідемпотентний**: видалення вже видаленого ресурсу повертає 404 (не помилку сервера) — це коректна очікувана поведінка. Після DELETE запит GET на той самий ID має повертати 404.",
           },
+          {
+            term: "HEAD",
+            def:  "Працює точно як GET, але сервер повертає **лише заголовки — без тіла відповіді**. Сервер повністю обробляє запит, але не передає корисне навантаження. Зручно для перевірки існування ресурсу (за кодом статусу) або читання метаданих (`Content-Length`, `Last-Modified`) без завантаження повних даних.",
+            note: "<div style='margin-top:8px;padding:8px 12px;border-left:3px solid var(--put);background:rgba(245,158,11,.07);border-radius:3px;font-size:12px'>⚠ <strong>Не є частиною CRUD.</strong> HEAD — це мета/утилітарний метод: він дозволяє інспектувати ресурси без читання їхнього вмісту. Використовується переважно кешами, краулерами та інструментами моніторингу, а не типовими клієнтськими застосунками.</div>",
+          },
+          {
+            term: "OPTIONS",
+            def:  "Повертає **список HTTP-методів, дозволених** для вказаного URL. Використовується браузерами автоматично як **CORS preflight запит** — перед будь-яким cross-origin запитом браузер мовчки запитує сервер «які методи ти тут дозволяєш?». Розробники рідко викликають OPTIONS явно.",
+            note: "<div style='margin-top:8px;padding:8px 12px;border-left:3px solid var(--put);background:rgba(245,158,11,.07);border-radius:3px;font-size:12px'>⚠ <strong>Не є частиною CRUD.</strong> OPTIONS обробляється автоматично фреймворком (FastAPI) і браузером. Як QA-інженер ви майже ніколи не викликатимете його вручну — але можете побачити його у вкладці Network в DevTools браузера перед cross-origin запитами.</div>",
+          },
         ],
       },
       {
@@ -454,6 +474,16 @@ const GLOSSARY = {
           {
             term: "DELETE",
             def:  "Удаляет ресурс навсегда. **Идемпотентный**: удаление уже удалённого ресурса возвращает 404 (не ошибку сервера) — это корректное ожидаемое поведение. После DELETE запрос GET на тот же ID должен возвращать 404.",
+          },
+          {
+            term: "HEAD",
+            def:  "Работает точно как GET, но сервер возвращает **только заголовки — без тела ответа**. Сервер полностью обрабатывает запрос, но не передаёт полезную нагрузку. Удобно для проверки существования ресурса (по коду статуса) или чтения метаданных (`Content-Length`, `Last-Modified`) без загрузки полных данных.",
+            note: "<div style='margin-top:8px;padding:8px 12px;border-left:3px solid var(--put);background:rgba(245,158,11,.07);border-radius:3px;font-size:12px'>⚠ <strong>Не является частью CRUD.</strong> HEAD — это мета/утилитарный метод: он позволяет инспектировать ресурсы без чтения их содержимого. Используется преимущественно кешами, краулерами и инструментами мониторинга, а не типичными клиентскими приложениями.</div>",
+          },
+          {
+            term: "OPTIONS",
+            def:  "Возвращает **список HTTP-методов, разрешённых** для указанного URL. Используется браузерами автоматически как **CORS preflight запрос** — перед любым cross-origin запросом браузер молча спрашивает сервер «какие методы ты здесь разрешаешь?». Разработчики редко вызывают OPTIONS явно.",
+            note: "<div style='margin-top:8px;padding:8px 12px;border-left:3px solid var(--put);background:rgba(245,158,11,.07);border-radius:3px;font-size:12px'>⚠ <strong>Не является частью CRUD.</strong> OPTIONS обрабатывается автоматически фреймворком (FastAPI) и браузером. Как QA-инженер вы почти никогда не будете вызывать его вручную — но можете увидеть его во вкладке Network в DevTools браузера перед cross-origin запросами.</div>",
           },
         ],
       },

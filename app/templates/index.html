@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REST API Learning Tool for QA</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═════════════════════════════════ -->
+<header>
+  <h1>REST API <span>Learning Tool for QA</span></h1>
+  <div class="header-right">
+    <div class="lang-btns">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn"        data-lang="uk">UK</button>
+      <button class="lang-btn"        data-lang="ru">RU</button>
+    </div>
+    <button class="btn-reset" id="btn-reset">⟳ Reset Data</button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ TAB BAR ════════════════════════════════ -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="collections">Collections</button>
+  <button class="tab-btn"        data-tab="about">About &amp; Glossary</button>
+  <a class="tab-btn tab-link" href="/docs" target="_blank" rel="noopener">Try API ↗</a>
+</div>
+
+<!-- ═══════════════════════════ TAB: COLLECTIONS ═══════════════════════════ -->
+<div class="tab-panel active" data-panel="collections">
+
+  <main>
+
+    <!-- ── USERS ─────────────────────────────────────────── -->
+    <div class="collection">
+      <div class="collection-header">
+        <h2>
+          Users
+          <span class="endpoint">/api/users</span>
+        </h2>
+        <button class="btn-add" onclick="openPost('users')">+ POST new user</button>
+      </div>
+      <div class="table-wrap">
+        <table id="table-users">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">
+              <span class="spinner"></span> Loading…
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── BOOKS ─────────────────────────────────────────── -->
+    <div class="collection">
+      <div class="collection-header">
+        <h2>
+          Books
+          <span class="endpoint">/api/books</span>
+        </h2>
+        <button class="btn-add" onclick="openPost('books')">+ POST new book</button>
+      </div>
+      <div class="table-wrap">
+        <table id="table-books">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Year</th>
+              <th>Genre</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">
+              <span class="spinner"></span> Loading…
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── REQUEST LOG ───────────────────────────────────── -->
+    <section id="log-section">
+      <div class="log-header">
+        <h2>Request Log
+          <span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:8px">
+            — click a row to expand the response &amp; explanation
+          </span>
+        </h2>
+        <button class="btn-clear" id="btn-clear-log">Clear</button>
+      </div>
+      <div id="log-list">
+        <div class="log-empty" id="log-empty">
+          No requests yet. Start by using the controls above or call the API directly from Postman / curl.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── QUICK REFERENCE ───────────────────────────────── -->
+  <div style="max-width:1600px;margin:0 auto 40px;padding:0 24px">
+    <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0">
+      <summary style="padding:14px 16px;cursor:pointer;font-weight:600;font-size:14px;list-style:none;display:flex;align-items:center;gap:8px">
+        <span style="color:var(--accent)">▶</span> Quick Reference — HTTP Methods &amp; Status Codes
+      </summary>
+      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+        <div>
+          <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px">HTTP Methods</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">Method</th>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">Action</th>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">Idempotent</th>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">Safe</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="method-badge badge-GET">GET</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Read resource(s)</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--get)">✓ Yes</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--get)">✓ Yes</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="method-badge badge-POST">POST</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Create resource</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--delete)">✗ No</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--delete)">✗ No</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="method-badge badge-PUT">PUT</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Full replace</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--get)">✓ Yes</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--delete)">✗ No</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="method-badge badge-PATCH">PATCH</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Partial update</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--muted)">~ Maybe</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--delete)">✗ No</td></tr>
+              <tr><td style="padding:7px 10px"><span class="method-badge badge-DELETE">DELETE</span></td><td style="padding:7px 10px">Remove resource</td><td style="padding:7px 10px;color:var(--get)">✓ Yes</td><td style="padding:7px 10px;color:var(--delete)">✗ No</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px">Status Codes</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">Code</th>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">Meaning</th>
+              <th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:11px;text-transform:uppercase">When</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="status-badge status-2xx">200</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">OK</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:12px">GET / PUT / PATCH / DELETE success</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="status-badge status-2xx">201</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Created</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:12px">POST — resource successfully created</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="status-badge status-2xx">204</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">No Content</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:12px">Success, empty body (common for DELETE)</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="status-badge status-4xx">400</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Bad Request</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:12px">Request semantically wrong</td></tr>
+              <tr><td style="padding:7px 10px;border-bottom:1px solid var(--border)"><span class="status-badge status-4xx">404</span></td><td style="padding:7px 10px;border-bottom:1px solid var(--border)">Not Found</td><td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-size:12px">Resource with given ID doesn't exist</td></tr>
+              <tr><td style="padding:7px 10px"><span class="status-badge status-4xx">422</span></td><td style="padding:7px 10px">Unprocessable</td><td style="padding:7px 10px;color:var(--muted);font-size:12px">Field validation failed</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="grid-column:1/-1">
+          <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px">Available Endpoints</h3>
+          <div style="font-family:monospace;font-size:13px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px">
+            <div><span class="method-badge badge-GET"    style="margin-right:8px">GET</span>    /api/users</div>
+            <div><span class="method-badge badge-GET"    style="margin-right:8px">GET</span>    /api/users/{id}</div>
+            <div><span class="method-badge badge-POST"   style="margin-right:8px">POST</span>   /api/users</div>
+            <div><span class="method-badge badge-PUT"    style="margin-right:8px">PUT</span>    /api/users/{id}</div>
+            <div><span class="method-badge badge-PATCH"  style="margin-right:8px">PATCH</span>  /api/users/{id}</div>
+            <div><span class="method-badge badge-DELETE" style="margin-right:8px">DELETE</span> /api/users/{id}</div>
+            <div><span class="method-badge badge-GET"    style="margin-right:8px">GET</span>    /api/books</div>
+            <div><span class="method-badge badge-GET"    style="margin-right:8px">GET</span>    /api/books/{id}</div>
+            <div><span class="method-badge badge-POST"   style="margin-right:8px">POST</span>   /api/books</div>
+            <div><span class="method-badge badge-PUT"    style="margin-right:8px">PUT</span>    /api/books/{id}</div>
+            <div><span class="method-badge badge-PATCH"  style="margin-right:8px">PATCH</span>  /api/books/{id}</div>
+            <div><span class="method-badge badge-DELETE" style="margin-right:8px">DELETE</span> /api/books/{id}</div>
+            <div><span class="method-badge badge-POST"   style="margin-right:8px">POST</span>   /api/reset</div>
+            <div><span class="method-badge badge-GET"    style="margin-right:8px">GET</span>    /docs  (Swagger UI)</div>
+          </div>
+        </div>
+
+      </div>
+    </details>
+  </div>
+
+</div><!-- end tab: collections -->
+
+<!-- ══════════════════════════ TAB: ABOUT & GLOSSARY ═══════════════════════ -->
+<div class="tab-panel" data-panel="about">
+  <div id="glossary-root"></div>
+</div>
+
+<!-- ═══════════════════════════════ MODAL ══════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h2 id="modal-title">Form</h2>
+    <div class="modal-subtitle" id="modal-subtitle"></div>
+    <div id="modal-form"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-submit" onclick="submitModal()">Send Request</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/glossary.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
